@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Product System{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-8e7IcyyPZRPocdB/2xhBZo48DbG+MIfU6S54Png5xIwCdfy4g6XiBvUyq7PXVLMm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{% static 'store/css/styles.css' %}" />
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-grid">
+            <a class="brand" href="{% url 'product_list' %}">Product System</a>
+            <nav class="site-nav" aria-label="Primary navigation">
+                <a href="{% url 'product_list' %}">Products</a>
+                <a href="/admin/">Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container page-shell">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <p>Built with Django for modern product catalog management.</p>
+            <p>&copy; {{ now|date:'Y' }} Product System</p>
+        </div>
+    </footer>
+</body>
+</html>

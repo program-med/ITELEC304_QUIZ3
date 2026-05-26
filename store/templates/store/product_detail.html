@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} | Product Details{% endblock %}
+
+{% block content %}
+<div class="product-detail">
+    <div class="product-detail-card">
+        <header>
+            <h1>{{ product.name }}</h1>
+            {% if product.category %}
+                <p class="product-category">{{ product.category.name }}</p>
+            {% endif %}
+        </header>
+        <div class="product-detail-info">
+            <div class="product-detail-meta">
+                <dl>
+                    <div>
+                        <dt>Price</dt>
+                        <dd>₱{{ product.price }}</dd>
+                    </div>
+                    <div>
+                        <dt>SKU</dt>
+                        <dd>{{ product.sku|default:'N/A' }}</dd>
+                    </div>
+                    <div>
+                        <dt>Available</dt>
+                        <dd>{{ product.available|yesno:'Yes,No' }}</dd>
+                    </div>
+                    <div>
+                        <dt>Added</dt>
+                        <dd>{{ product.created_at|date:'F j, Y' }}</dd>
+                    </div>
+                </dl>
+            </div>
+            <section class="product-detail-body">
+                <h2>Product Overview</h2>
+                <p>{{ product.description|default:'This product does not have a description yet.' }}</p>
+            </section>
+        </div>
+        <a class="button button-primary" href="{% url 'product_list' %}">Return to catalog</a>
+    </div>
+</div>
+{% endblock %}

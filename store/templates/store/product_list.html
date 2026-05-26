@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Products | Product System{% endblock %}
+
+{% block content %}
+<div class="store-hero">
+    <div>
+        <h1>Product Catalog</h1>
+        <p>Explore quality items handpicked for your business or store.</p>
+    </div>
+</div>
+
+<div class="store-toolbar">
+    <form method="get" class="store-search-form">
+        <input type="text" name="q" placeholder="Search products" value="{{ query }}" />
+        <button type="submit">Search</button>
+    </form>
+    <div class="store-filter">
+        <span>Category</span>
+        <select onchange="location.href=this.value">
+            <option value="{% url 'product_list' %}"{% if not selected_category %} selected{% endif %}>All Categories</option>
+            {% for category in categories %}
+                <option value="?category={{ category.slug }}"{% if category.slug == selected_category %} selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+{% if products.exists %}
+<div class="product-grid">
+    {% for product in products %}
+        <article class="product-card">
+            <header>
+                <h2><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h2>
+                {% if product.category %}
+                    <p class="product-category">{{ product.category.name }}</p>
+                {% endif %}
+            </header>
+            <p class="product-description">{{ product.description|default:'No description available.' }}</p>
+            <div class="product-footer">
+                <span class="product-price">₱{{ product.price }}</span>
+                <a class="button button-secondary" href="{{ product.get_absolute_url }}">View Details</a>
+            </div>
+        </article>
+    {% endfor %}
+</div>
+{% else %}
+    <p class="notice">No products match your search. Try another keyword or choose a different category.</p>
+{% endif %}
+{% endblock %}
